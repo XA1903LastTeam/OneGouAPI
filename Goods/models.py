@@ -61,7 +61,9 @@ class GoodsInfoModel(YGBaseModel):
     commdityspec = models.CharField(max_length=20,
                                     verbose_name='规格')
     video = models.CharField(max_length=200,
-                             verbose_name='视频')
+                             verbose_name='视频',
+                             null=True,
+                             blank=True)
     placeoforgin = models.CharField(max_length=100,
                                     verbose_name='产地')
 
