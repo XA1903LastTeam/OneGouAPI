@@ -17,7 +17,10 @@ class UserModel(YGBaseModel):
     bool = models.BooleanField(default=True,
                                verbose_name='状态')
     address_id = models.ForeignKey("Address.AddressModel",
-                                 on_delete=models.CASCADE, related_name='to_address')
+                                 on_delete=models.CASCADE,
+                                   related_name='to_address',
+                                   null=True,
+                                   blank=True)
 
     def __str__(self):
         return self.name
@@ -28,9 +31,9 @@ class UserModel(YGBaseModel):
 
 
 class CommentsModel(YGBaseModel):
-    order_id = models.ForeignKey('CartList.order_listModel',
+    order_id = models.ForeignKey('CartList.Order_listModel',
                                  verbose_name='订单ID',
-                                 on_delete=models.SET_NULL,
+                                 on_delete=models.CASCADE,
                                  related_name='good_comment')
     comments = models.TextField(max_length=500,
                                 verbose_name='评论内容')
@@ -47,7 +50,7 @@ class CommentsModel(YGBaseModel):
 
 class NavModel(YGBaseModel):
     nav_child_id = models.OneToOneField('Funy.CategoryModel',
-                                        verbose_name='分类ID', on_delete=models.SET_NULL)
+                                        verbose_name='分类ID', on_delete=models.CASCADE, related_name='nav')
     name = models.CharField(max_length=20,
                             verbose_name='名称')
     image = models.CharField(max_length=200,

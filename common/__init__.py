@@ -17,5 +17,5 @@ class YGBaseModel(models.Model):
 def new_uuid(sender, **kwargs):
     if issubclass(sender, YGBaseModel):
         instance = kwargs.get('instance')
-        if instance.id is None:
+        if not instance.id:
             instance.id = uuid.uuid4().hex
