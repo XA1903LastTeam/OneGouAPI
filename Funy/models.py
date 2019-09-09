@@ -29,7 +29,7 @@ class YgeatModel(YGBaseModel):
     eat_img = models.CharField(max_length=200,verbose_name='图片地址')
     eat_content = models.CharField(max_length=50,verbose_name='描述')
     eat_time = models.CharField(max_length=20,verbose_name='时间')
-    hot = models.IntegerField(verbose_name='热度',)
+    hot = models.IntegerField(verbose_name='热度')
 
 
     class Meta:
