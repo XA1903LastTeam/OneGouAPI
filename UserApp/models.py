@@ -28,7 +28,7 @@ class UserModel(YGBaseModel):
 
 
 class CommentsModel(YGBaseModel):
-    order_id = models.ForeignKey('CartList.order_listModel',
+    order_id = models.ForeignKey('CartList.Order_listModel',
                                  verbose_name='订单ID',
                                  on_delete=models.SET_NULL,
                                  related_name='good_comment')
