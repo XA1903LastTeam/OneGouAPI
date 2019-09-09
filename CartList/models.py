@@ -21,7 +21,8 @@ class Order_listModel(YGBaseModel):
     start_time = models.CharField(max_length=50, verbose_name='下单时间')
     order_statud = models.IntegerField(choices=((0, '待支付'), (1, '已支付'), (2, '已取消'), (3, '待发货'), (4, '已发货'), (5, '已完成')),
                                        verbose_name='订单状态')
-    goods_id = models.ManyToManyField('Goods.GoodsModel', related_name='goods', db_table='t_goods_order_list', verbose_name='商品ID')
+    goods_id = models.ManyToManyField('Goods.GoodsModel', related_name='goods', db_table='t_goods_order_list',
+                                      verbose_name='商品ID')
     count = models.IntegerField(verbose_name='商品数量')
 
     card_id = models.IntegerField(verbose_name='所属购物车')
@@ -32,7 +33,3 @@ class Order_listModel(YGBaseModel):
     @property
     def count_price(self):
         return self.goods_id.originalprice * self.count
-
-
-
-
