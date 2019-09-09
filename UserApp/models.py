@@ -1,6 +1,7 @@
 from django.db import models
 
 from common import YGBaseModel
+from Funy.models import order_listModel
 
 # Create your models here.
 
@@ -27,9 +28,10 @@ class UserModel(YGBaseModel):
 
 
 class CommentsModel(YGBaseModel):
-    order_id = models.ForeignKey("",
+    order_id = models.ForeignKey(order_listModel.goods_id,
                                  verbose_name='订单ID',
-                                 on_delete=models.SET_NULL)
+                                 on_delete=models.SET_NULL,
+                                 related_name='good_comment')
     comments = models.TextField(max_length=500,
                                 verbose_name='评论内容')
     comment_time = models.CharField(max_length=30,
