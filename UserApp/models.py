@@ -1,7 +1,7 @@
 from django.db import models
 
 from common import YGBaseModel
-from CartList.models import order_listModel
+# from CartList.models import order_listModel
 
 # Create your models here.
 
@@ -16,8 +16,8 @@ class UserModel(YGBaseModel):
                             verbose_name='性别')
     bool = models.BooleanField(default=True,
                                verbose_name='状态')
-    address_id = models.ForeignKey("AddressModel",
-                                 on_delete=models.CASCADE, related_name='address')
+    address_id = models.ForeignKey("Address.AddressModel",
+                                 on_delete=models.CASCADE, related_name='to_address')
 
     def __str__(self):
         return self.name
@@ -28,7 +28,7 @@ class UserModel(YGBaseModel):
 
 
 class CommentsModel(YGBaseModel):
-    order_id = models.ForeignKey(order_listModel.goods_id,
+    order_id = models.ForeignKey('CartList.order_listModel',
                                  verbose_name='订单ID',
                                  on_delete=models.SET_NULL,
                                  related_name='good_comment')
@@ -46,7 +46,7 @@ class CommentsModel(YGBaseModel):
 
 
 class NavModel(YGBaseModel):
-    nav_child_id = models.OneToOneField('CategoryModel',
+    nav_child_id = models.OneToOneField('Funy.CategoryModel',
                                         verbose_name='分类ID', on_delete=models.SET_NULL)
     name = models.CharField(max_length=20,
                             verbose_name='名称')

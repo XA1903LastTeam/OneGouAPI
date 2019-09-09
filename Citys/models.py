@@ -8,8 +8,8 @@ class CityModels(YGBaseModel):
                                  )
     city_letter = models.CharField(verbose_name='首字母名称',
                                    max_length=10)
-    city_hot = models.IntegerField(verbose_name='热度',
-                                   max_length=5)
+    city_hot = models.IntegerField(verbose_name='热度'
+                                   )
 
     def __str__(self):
         return self.city_name
