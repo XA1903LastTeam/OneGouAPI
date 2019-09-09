@@ -11,7 +11,7 @@ class GoodsModel(YGBaseModel):
 
     categoryid = models.ForeignKey('Funy.CategoryModel',
                                    verbose_name='所属分类',
-                                   related_name='goods',
+                                   related_name='cate_goods',
                                    on_delete=models.SET_NULL,
                                    null=True,
                                    blank=True)
@@ -45,7 +45,7 @@ class GoodsInfoModel(YGBaseModel):
 
     goods_id = models.OneToOneField(GoodsModel,
                                     on_delete=models.CASCADE,
-                                    related_name='goods',
+                                    related_name='info_id',
                                     verbose_name='商品id')
     commodityinfo = models.CharField(max_length=50,
                                      verbose_name='商品说明')
@@ -54,7 +54,7 @@ class GoodsInfoModel(YGBaseModel):
                                 verbose_name='副标题')
     promotiontag = models.ManyToManyField(TagModel,
                                           db_table='goods_info_tag',
-                                          related_name='goods_info',
+                                          related_name='goods_tag',
                                           verbose_name='标签名')
     commoditunit = models.CharField(max_length=20,
                                     verbose_name='单位')
@@ -101,7 +101,7 @@ class GoodsImageModel(YGBaseModel):
 
     goods_id = models.ForeignKey(GoodsModel,
                                  on_delete=models.SET_NULL,
-                                 related_name='goods',
+                                 related_name='image_id',
                                  verbose_name='商品id',
                                  null=True,
                                  blank=True)
