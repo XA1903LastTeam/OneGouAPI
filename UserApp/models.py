@@ -17,7 +17,7 @@ class UserModel(YGBaseModel):
     bool = models.BooleanField(default=True,
                                verbose_name='状态')
     address_id = models.ForeignKey("Address.AddressModel",
-                                 on_delete=models.CASCADE, related_name='address')
+                                 on_delete=models.CASCADE, related_name='to_address')
 
     def __str__(self):
         return self.name
