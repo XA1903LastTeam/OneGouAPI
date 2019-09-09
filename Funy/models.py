@@ -1,4 +1,7 @@
 from django.db import models
+from common import YGBaseModel
+
+
 
 # Create your models here.
 
@@ -14,11 +17,10 @@ class CategoryModel(YGBaseModel):
         return self.name
 
 
+
     class Meta:
         db_table = 't_category'
         verbose_name_plural = verbose_name = '分类表'
-
-
 
 
 
