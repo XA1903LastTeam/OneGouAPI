@@ -171,9 +171,15 @@ LOGGING = {
         }
     }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+SESSION_COOKIE_NAME = 'session_id'
+SESSION_COOKIE_AGE = 1209600  # 两周
+
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.BaseCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://xm.imzhangao.com:6377/3',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
@@ -183,8 +189,3 @@ CACHES = {
         'VERSION': 10,
     },
 }
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'
-SESSION_COOKIE_NAME = 'session_id'
-SESSION_COOKIE_AGE = 1209600  # 两周
