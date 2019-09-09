@@ -14,7 +14,6 @@ class CategoryAdmin(admin.ModelAdmin):
 class YgeatAdmin(admin.ModelAdmin):
     list_display = ('id','eat_img','eat_content','eat_time','hot')
     fields = ('eat_img','eat_content','eat_time','hot')
-    list_display = ('eat_img','eat_content','eat_time','hot')
 
 
 
