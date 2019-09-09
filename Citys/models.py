@@ -1,10 +1,11 @@
 from django.db import models
 from common import YGBaseModel
 
+
 # Create your models here.
 class CityModels(YGBaseModel):
     city_name = models.CharField(verbose_name='城市名称',
-                            max_length=10
+                                 max_length=10
                                  )
     city_letter = models.CharField(verbose_name='首字母名称',
                                    max_length=10)
@@ -19,11 +20,10 @@ class CityModels(YGBaseModel):
         verbose_name_plural = verbose_name = '城市'
 
 
-
 class CityAreaModels(YGBaseModel):
     cityareaname = models.CharField(verbose_name='区域名称',
-                                    max_length= 50
-                                     )
+                                    max_length=50
+                                    )
     city_id = models.ForeignKey(CityModels,
                                 verbose_name='所属城市',
                                 related_name='citys',
@@ -31,7 +31,6 @@ class CityAreaModels(YGBaseModel):
                                 blank=True,
                                 null=True
                                 )
-
 
     def __str__(self):
         return self.cityareaname
