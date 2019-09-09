@@ -1,5 +1,7 @@
 from django.db import models
 from common import YGBaseModel
+from Funy.models import CategoryModel
+from Address.models import ActivesModel
 
 
 # Create your models here.
@@ -9,17 +11,19 @@ class GoodsModel(YGBaseModel):
         db_table = 't_goods'
         verbose_name_plural = verbose_name = '商品表'
 
-    categoryid = models.ForeignKey('',
+    categoryid = models.ForeignKey(CategoryModel,
                                    verbose_name='所属分类',
                                    related_name='goods',
-                                   on_delete=models.SET_NULL)
+                                   on_delete=models.SET_NULL,
+                                   null=True,
+                                   blank=True)
     commodityname = models.CharField(max_length=20,
                                      verbose_name='商品名')
     commoditycode = models.IntegerField(verbose_name='编号')
     maxlimitcount = models.IntegerField(verbose_name='最大购买数')
     originalprice = models.DecimalField(verbose_name='原价',
-                                        max_digits=2,
-                                        max_length=10)
+                                        max_digits=10,
+                                        decimal_places=2)
     goodshot = models.IntegerField(verbose_name='热度')
 
     def __str__(self):
@@ -77,7 +81,7 @@ class SiwapModel(YGBaseModel):
         db_table = 't_siwap'
         verbose_name_plural = verbose_name = '轮播图表'
 
-    active_id = models.OneToOneField('',
+    active_id = models.OneToOneField(ActivesModel,
                                      on_delete=models.CASCADE,
                                      related_name='actives',
                                      verbose_name='活动表')
@@ -85,7 +89,8 @@ class SiwapModel(YGBaseModel):
                                   verbose_name='活动大图')
 
     def __str__(self):
-        pass
+        return self.active_id.active_name
+
 
 # 商品图片表
 class GoodsImageModel(YGBaseModel):
@@ -99,7 +104,9 @@ class GoodsImageModel(YGBaseModel):
     goods_id = models.ForeignKey(GoodsModel,
                                  on_delete=models.SET_NULL,
                                  related_name='goods',
-                                 verbose_name='商品id')
+                                 verbose_name='商品id',
+                                 null=True,
+                                 blank=True)
 
     def __str__(self):
         return self.goods_id.commodityname

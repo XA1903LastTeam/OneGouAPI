@@ -1,7 +1,7 @@
 from django.db import models
 
 from common import YGBaseModel
-from Funy.models import order_listModel
+from CartList.models import order_listModel
 
 # Create your models here.
 
