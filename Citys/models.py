@@ -27,7 +27,9 @@ class CityAreaModels(YGBaseModel):
     city_id = models.ForeignKey(CityModels,
                                 verbose_name='所属城市',
                                 related_name='citys',
-                                on_delete=models.SET_NULL
+                                on_delete=models.SET_NULL,
+                                blank=True,
+                                null=True
                                 )
 
 
