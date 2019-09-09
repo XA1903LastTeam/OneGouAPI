@@ -10,7 +10,7 @@ from common import YGBaseModel
 
 class CategoryModel(YGBaseModel):
     name = models.CharField(max_length=10,verbose_name='分类名')
-    category_url = models.CharField(max_length=200,verbose_name='分类图片')
+    category_url = models.CharField(max_length=200,verbose_name='分类图片',null=True,blank=True)
     father_id = models.ForeignKey('self',on_delete=models.CASCADE,null=True,blank=True,verbose_name='父分类名')
 
     def __str__(self):
