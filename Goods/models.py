@@ -1,7 +1,5 @@
 from django.db import models
 from common import YGBaseModel
-from Funy.models import CategoryModel
-from Address.models import ActivesModel
 
 
 # Create your models here.
@@ -11,7 +9,7 @@ class GoodsModel(YGBaseModel):
         db_table = 't_goods'
         verbose_name_plural = verbose_name = '商品表'
 
-    categoryid = models.ForeignKey(CategoryModel,
+    categoryid = models.ForeignKey('Funy.CategoryModel',
                                    verbose_name='所属分类',
                                    related_name='goods',
                                    on_delete=models.SET_NULL,
@@ -81,7 +79,7 @@ class SiwapModel(YGBaseModel):
         db_table = 't_siwap'
         verbose_name_plural = verbose_name = '轮播图表'
 
-    active_id = models.OneToOneField(ActivesModel,
+    active_id = models.OneToOneField('Address.ActivesModel',
                                      on_delete=models.CASCADE,
                                      related_name='actives',
                                      verbose_name='活动表')
