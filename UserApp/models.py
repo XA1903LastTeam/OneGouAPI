@@ -4,7 +4,7 @@ from common import YGBaseModel
 
 # Create your models here.
 
-class userModel(YGBaseModel):
+class UserModel(YGBaseModel):
     name = models.CharField(max_length=20,
                             verbose_name='用户名')
     phone = models.CharField(max_length=11,
@@ -15,7 +15,7 @@ class userModel(YGBaseModel):
                             verbose_name='性别')
     bool = models.BooleanField(default=True,
                                verbose_name='状态')
-    address_id = models.ForeignKey("",
+    address_id = models.ForeignKey("AddressModel",
                                  on_delete=models.CASCADE, related_name='address')
 
     def __str__(self):
@@ -26,7 +26,7 @@ class userModel(YGBaseModel):
         verbose_name_plural = verbose_name = '用户表'
 
 
-class commentsModel(YGBaseModel):
+class CommentsModel(YGBaseModel):
     order_id = models.ForeignKey("",
                                  verbose_name='订单ID',
                                  on_delete=models.SET_NULL)
@@ -43,8 +43,8 @@ class commentsModel(YGBaseModel):
         verbose_name_plural = verbose_name = '评论表'
 
 
-class navModel(YGBaseModel):
-    nav_child_id = models.OneToOneField('',
+class NavModel(YGBaseModel):
+    nav_child_id = models.OneToOneField('CategoryModel',
                                         verbose_name='分类ID', on_delete=models.SET_NULL)
     name = models.CharField(max_length=20,
                             verbose_name='名称')
