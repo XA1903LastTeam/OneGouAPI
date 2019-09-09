@@ -54,7 +54,7 @@ class GoodsInfoModel(YGBaseModel):
                                 verbose_name='副标题')
     promotiontag = models.ManyToManyField(TagModel,
                                           db_table='goods_info_tag',
-                                          related_name='goods_info',g
+                                          related_name='goods_info',
                                           verbose_name='标签名')
     commoditunit = models.CharField(max_length=20,
                                     verbose_name='单位')
