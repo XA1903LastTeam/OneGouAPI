@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 
 class YGBaseModel(models.Model):
-    id = models.UUIDField(primary_key=True, verbose_name='ID')
+    id = models.CharField(max_length=50, primary_key=True, verbose_name='ID')
 
     class Meta:
         abstract = True
