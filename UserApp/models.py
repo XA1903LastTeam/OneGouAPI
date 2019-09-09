@@ -27,9 +27,10 @@ class UserModel(YGBaseModel):
 
 
 class CommentsModel(YGBaseModel):
-    order_id = models.ForeignKey("",
+    order_id = models.ForeignKey("OrderList.manytomany",
                                  verbose_name='订单ID',
-                                 on_delete=models.SET_NULL)
+                                 on_delete=models.SET_NULL,
+                                 related_name='good_comment')
     comments = models.TextField(max_length=500,
                                 verbose_name='评论内容')
     comment_time = models.CharField(max_length=30,
