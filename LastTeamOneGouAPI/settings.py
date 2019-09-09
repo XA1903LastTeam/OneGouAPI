@@ -173,7 +173,7 @@ LOGGING = {
 }
 CACHES = {
     'default': {
-        'BACKEND': 'django_redis.cache.BaseCache',
+        'BACKEND': 'django_redis.cache.RedisCache',
         'LOCATION': 'redis://xm.imzhangao.com:6377/3',
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
