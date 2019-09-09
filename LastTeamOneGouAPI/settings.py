@@ -171,6 +171,12 @@ LOGGING = {
         }
     }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+SESSION_CACHE_ALIAS = 'default'
+SESSION_COOKIE_NAME = 'session_id'
+SESSION_COOKIE_AGE = 1209600  # 两周
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -183,8 +189,3 @@ CACHES = {
         'VERSION': 10,
     },
 }
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
-SESSION_CACHE_ALIAS = 'default'
-SESSION_COOKIE_NAME = 'session_id'
-SESSION_COOKIE_AGE = 1209600  # 两周
