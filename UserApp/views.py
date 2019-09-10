@@ -1,10 +1,7 @@
 import io
 
 from django.views import View
-from rest_framework.parsers import JSONParser
-from rest_framework.views import APIView
-from django.http import JsonResponse, HttpResponse
-from rest_framework.renderers import JSONRenderer
+from django.http import JsonResponse
 
 from UserApp.models import UserModel
 from .api import UserSeraLizer
@@ -16,6 +13,4 @@ class UserAPIView(View):
         if not login:
             datas = UserModel.objects.all()
             serializer = UserSeraLizer(datas, many=True)
-            return JsonResponse({
-                'data':serializer.data
-            })
+            return JsonResponse({ 'data':serializer.data })

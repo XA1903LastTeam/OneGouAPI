@@ -4,8 +4,13 @@ from common import YGBaseModel
 # from CartList.models import order_listModel
 
 # Create your models here.
+class UserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(~models.Q(bool=True))
+
 
 class UserModel(YGBaseModel):
+
     name = models.CharField(max_length=20,
                             verbose_name='用户名')
     phone = models.CharField(max_length=11,
@@ -21,6 +26,8 @@ class UserModel(YGBaseModel):
                                    related_name='to_address',
                                    null=True,
                                    blank=True)
+
+    objects = UserManager()
 
     def __str__(self):
         return self.name
