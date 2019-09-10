@@ -19,9 +19,7 @@ from django.conf.urls.static import static, settings
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
-
-                  path('user/',include('UserApp.urls', namespace='user')),
-                  path('goods/', include('Goods.urls', namespace='goods')),
-                  path('user/', include('UserApp.urls', namespace='user')),
+                  path('goods/', include('Goods.urls', namespace='goods_app')),
+                  path('user/', include('UserApp.urls', namespace='user_app')),
                   path('city/', include('Citys.urls', namespace='city')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
