@@ -1,7 +1,8 @@
 import io
 
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from rest_framework.renderers import JSONRenderer
 
 from UserApp.models import UserModel
 from .api import UserSeraLizer
@@ -14,3 +15,4 @@ class UserAPIView(View):
             datas = UserModel.objects.all()
             serializer = UserSeraLizer(datas, many=True)
             return JsonResponse({ 'data':serializer.data })
+
