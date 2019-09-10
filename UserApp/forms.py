@@ -25,8 +25,8 @@ class UserForm(forms.ModelForm):
                             required=False)
 
     class Meta:
-        model = UserModel
-        fields = ('name', 'phone')
+        model = ''
+        fields = ('name', 'phone', 'image', 'sex', 'bool', 'address_id')
 
     def is_valid(self):
         return super().is_valid()

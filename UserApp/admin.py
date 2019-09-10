@@ -2,11 +2,12 @@ from django.contrib import admin
 
 # Register your models here.
 from UserApp.models import UserModel, CommentsModel, NavModel
+from .forms import UserForm
 
 
 class UserModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'phone', 'image', 'sex', 'bool')
-    fields = ('name', 'phone', 'image', 'sex', 'bool')
+    form = UserForm
 
 
 class CommentsAdmin(admin.ModelAdmin):
