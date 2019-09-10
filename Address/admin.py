@@ -11,7 +11,7 @@ class AddressModelAdmin(admin.ModelAdmin):
 
 class DiscountModelAdmin(admin.ModelAdmin):
     list_display = ('user_id', 'deduction', 'total', 'datatime', 'periode_of_validity')
-    fields = ('user_id', 'deduction', 'total', 'datatime', 'periode_of_validity')
+    fields = ('user_id', 'deduction', 'total_maney', 'datatime', 'periode_of_validity')
 
 
 admin.site.register(AddressModel, AddressModelAdmin)
