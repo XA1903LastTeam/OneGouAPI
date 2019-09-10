@@ -92,11 +92,6 @@ class Migration(migrations.Migration):
             field=models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='info_id', to='Goods.GoodsModel', verbose_name='商品id'),
         ),
         migrations.AddField(
-            model_name='goodsinfomodel',
-            name='promotiontag',
-            field=models.ManyToManyField(db_table='goods_info_tag', related_name='goods_tag', to='Goods.TagModel', verbose_name='标签名'),
-        ),
-        migrations.AddField(
             model_name='goodsimagemodel',
             name='goods_id',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='image_id', to='Goods.GoodsModel', verbose_name='商品id'),

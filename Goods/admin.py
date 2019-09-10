@@ -8,18 +8,12 @@ class GoodsModelAdmin(admin.ModelAdmin):
 
 
 class TagModelAdmin(admin.ModelAdmin):
-
     list_display = ('tag',)
 
 
 class GoodsInfoModelAdmin(admin.ModelAdmin):
     list_display = (
-        'goods_id', 'sellprice', 'placeoforgin', 'get_name')
-
-    def get_name(self, obj):
-        return obj.commdity_spec_unit
-
-    get_name.short_description = '规格'
+        'goods_id', 'sellprice', 'placeoforgin', 'spec')
 
 
 class SiwapModelAdmin(admin.ModelAdmin):
