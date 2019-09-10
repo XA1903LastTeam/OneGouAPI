@@ -1,7 +1,8 @@
 import io
 
 from django.views import View
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from rest_framework.renderers import JSONRenderer
 
 from UserApp.models import UserModel
 from .api import UserSeraLizer
