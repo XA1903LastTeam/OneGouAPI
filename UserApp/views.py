@@ -13,15 +13,9 @@ class UserAPIView(View):
         if not login:
             datas = UserModel.objects.all()
             serializer = UserSeraLizer(datas, many=True)
-<<<<<<< HEAD
 
-            data = JSONRenderer().render(serializer.data)
-            data = JSONParser().parse(io.BytesIO(data))
 
-        return JsonResponse({'data': data})
+
 
             return JsonResponse({ 'data':serializer.data })
 
-=======
-            return JsonResponse({ 'data':serializer.data })
->>>>>>> 57b859ac59c4c116f344f6f190f4ebd3e9b0b437
