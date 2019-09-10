@@ -19,4 +19,8 @@ from django.conf.urls.static import static, settings
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
+<<<<<<< HEAD
+                  path('user/',include('UserApp.urls', namespace='user'))
+=======
+>>>>>>> d06946b004e333bded0cba765aab5794b15661cb
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

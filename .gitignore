@@ -1,3 +1,8 @@
 .idea
 __pycache__
 *.log
+*.json
+careate_goods.py
+data
+*.sql
+*.txt
