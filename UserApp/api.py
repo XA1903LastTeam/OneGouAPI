@@ -14,6 +14,7 @@ from .models import NavModel
 # 用户API接口
 
 from .models import UserModel
+from Address.models import AddressModel
 
 
 class UserSeraLizer(serializers.HyperlinkedModelSerializer):
@@ -23,5 +24,5 @@ class UserSeraLizer(serializers.HyperlinkedModelSerializer):
 
 class AdderssSeraLizer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        # model =
-        pass
+        model = AddressModel
+        fields = ('id', 'address')
