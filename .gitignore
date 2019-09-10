@@ -1,10 +1,8 @@
 .idea
 __pycache__
 *.log
-<<<<<<< HEAD
 *.json
 careate_goods.py
-=======
 data
->>>>>>> 5ddaaed1050d99c0da18b79df7c32a6f0362b84d
 *.sql
+*.txt

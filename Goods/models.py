@@ -46,19 +46,19 @@ class GoodsInfoModel(YGBaseModel):
                                     on_delete=models.CASCADE,
                                     related_name='info_id',
                                     verbose_name='商品id')
-    commodityinfo = models.CharField(max_length=50,
+    commodityinfo = models.CharField(max_length=200,
                                      verbose_name='商品说明')
     sellprice = models.FloatField(verbose_name='折扣价')
-    subtitle = models.CharField(max_length=20,
+    subtitle = models.CharField(max_length=200,
                                 verbose_name='副标题')
     promotiontag = models.ManyToManyField(TagModel,
-                                          db_table='goods_info_tag',
+                                          db_table='tag_goods_info',
                                           related_name='goods_tag',
                                           verbose_name='标签名')
-    commoditunit = models.CharField(max_length=20,
-                                    verbose_name='单位')
-    commdityspec = models.CharField(max_length=20,
-                                    verbose_name='规格')
+    unit = models.CharField(max_length=20,
+                            verbose_name='规格')
+    spec = models.CharField(max_length=30,
+                            verbose_name='单位/规格')
     video = models.CharField(max_length=200,
                              verbose_name='视频',
                              null=True,
@@ -68,10 +68,6 @@ class GoodsInfoModel(YGBaseModel):
 
     def __str__(self):
         return self.goods_id.commodityname
-
-    @property
-    def commdity_spec_unit(self):
-        return self.commoditunit + '/' + self.commdityspec
 
 
 # 轮播图表
