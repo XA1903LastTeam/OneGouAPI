@@ -19,4 +19,5 @@ from django.conf.urls.static import static, settings
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
+                  path('goods/', include('Goods.urls', namespace='goods')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
