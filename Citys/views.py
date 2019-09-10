@@ -21,6 +21,7 @@ class CityApi(View):
 
 class CityAreaApi(View):
     def get(self,request):
-        area_all = CityAreaModels.objects.all()
+        a = request.GET.get('one_id',None)
+        area_all = CityAreaModels.objects.filter(city_id=a).all()
         ser = CityAreaModelsSerializers(area_all,many=True)
         return JsonResponse({'data':ser.data})
