@@ -19,13 +19,6 @@ from django.conf.urls.static import static, settings
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
-<<<<<<< HEAD
-<<<<<<< HEAD
                   path('user/',include('UserApp.urls', namespace='user') ),
                   path('city/',include('Citys.urls', namespace='user') ),
-=======
-                  path('user/',include('UserApp.urls', namespace='user'))
->>>>>>> bda697e42c6995a23a56bd84b6dae40e86c578db
-=======
->>>>>>> d06946b004e333bded0cba765aab5794b15661cb
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
