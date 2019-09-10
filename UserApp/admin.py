@@ -16,8 +16,8 @@ class CommentsAdmin(admin.ModelAdmin):
 
 
 class NavModelAdmin(admin.ModelAdmin):
-    list_display = ('nav_child_id', 'name', 'image')
-    fields = ('nav_child_id', 'name', 'image')
+    list_display = ('nav_child_id', 'name', 'image', 'actives_id')
+    fields = ('nav_child_id', 'name', 'image', 'actives_id')
 
 admin.site.register(UserModel, UserModelAdmin)
 admin.site.register(CommentsModel, CommentsAdmin)

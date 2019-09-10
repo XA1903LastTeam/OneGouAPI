@@ -20,3 +20,8 @@ class UserSeraLizer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = UserModel
         fields = ('id', 'name', 'phone', 'image', 'sex', 'bool', 'address_id')
+
+class AdderssSeraLizer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        # model =
+        pass

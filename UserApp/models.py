@@ -56,8 +56,18 @@ class CommentsModel(YGBaseModel):
 
 
 class NavModel(YGBaseModel):
-    nav_child_id = models.OneToOneField('Funy.CategoryModel',
-                                        verbose_name='分类ID', on_delete=models.CASCADE, related_name='nav')
+    nav_child_id = models.ForeignKey('Funy.CategoryModel',
+                                     verbose_name='分类ID',
+                                     on_delete=models.CASCADE,
+                                     related_name='nav',
+                                     blank=True,
+                                     null=True)
+    actives_id = models.ForeignKey('Address.ActivesModel',
+                                   verbose_name='活动ID',
+                                   on_delete=models.CASCADE,
+                                   related_name='Navs',
+                                   blank=True,
+                                   null=True)
     name = models.CharField(max_length=20,
                             verbose_name='名称')
     image = models.CharField(max_length=200,
