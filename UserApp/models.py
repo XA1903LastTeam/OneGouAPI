@@ -4,8 +4,13 @@ from common import YGBaseModel
 # from CartList.models import order_listModel
 
 # Create your models here.
+class UserManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(bool=True)
+
 
 class UserModel(YGBaseModel):
+
     name = models.CharField(max_length=20,
                             verbose_name='用户名')
     phone = models.CharField(max_length=11,
@@ -21,6 +26,8 @@ class UserModel(YGBaseModel):
                                    related_name='to_address',
                                    null=True,
                                    blank=True)
+
+    objects = UserManager()
 
     def __str__(self):
         return self.name
@@ -49,8 +56,18 @@ class CommentsModel(YGBaseModel):
 
 
 class NavModel(YGBaseModel):
-    nav_child_id = models.OneToOneField('Funy.CategoryModel',
-                                        verbose_name='分类ID', on_delete=models.CASCADE, related_name='nav')
+    nav_child_id = models.ForeignKey('Funy.CategoryModel',
+                                     verbose_name='分类ID',
+                                     on_delete=models.CASCADE,
+                                     related_name='nav',
+                                     blank=True,
+                                     null=True)
+    actives_id = models.ForeignKey('Address.ActivesModel',
+                                   verbose_name='活动ID',
+                                   on_delete=models.CASCADE,
+                                   related_name='Navs',
+                                   blank=True,
+                                   null=True)
     name = models.CharField(max_length=20,
                             verbose_name='名称')
     image = models.CharField(max_length=200,
