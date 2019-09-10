@@ -6,7 +6,7 @@ from common import YGBaseModel
 # Create your models here.
 class UserManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(~models.Q(bool=True))
+        return super().get_queryset().filter(bool=True)
 
 
 class UserModel(YGBaseModel):
