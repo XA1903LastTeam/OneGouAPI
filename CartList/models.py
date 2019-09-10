@@ -26,7 +26,7 @@ class Order_listModel(YGBaseModel):
     count = models.IntegerField(verbose_name='商品数量')
 
     card_id = models.IntegerField(verbose_name='所属购物车')
-    addr_id = models.ForeignKey('AddressModel',on_delete=models.CASCADE,verbose_name='订单地址',related_name='收货地址')
+    addr_id = models.ForeignKey('Address.AddressModel',on_delete=models.CASCADE,verbose_name='订单地址',related_name='收货地址')
 
     def __str__(self):
         return self.order_id
