@@ -2,13 +2,11 @@
 from rest_framework import serializers
 from .models import NavModel
 
-#
-# class NavSerrializer(serializers.Serializer):
-#     nav_child_id = NavModel.nav_child_id.goods_cate__set.objects.all()
-#
-#     class Meta:
-#         model = NavModel
-#         fields = ['id', 'nav_child_id', 'name', 'image']
+
+class NavSerrializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = NavModel
+        fields = ['id', 'nav_child_id', 'name', 'image']
 
 
 # 用户API接口
