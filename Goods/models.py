@@ -9,13 +9,13 @@ class GoodsModel(YGBaseModel):
         db_table = 't_goods'
         verbose_name_plural = verbose_name = '商品表'
 
-    categoryid = models.ForeignKey('Funy.CategoryModel',
-                                   verbose_name='所属分类',
-                                   related_name='cate_goods',
-                                   on_delete=models.SET_NULL,
-                                   null=True,
-                                   blank=True)
-    commodityname = models.CharField(max_length=20,
+    categoryid = models.ManyToManyField('Funy.CategoryModel',
+                                        db_table='t_goods_category',
+                                        verbose_name='所属分类',
+                                        related_name='cate_goods',
+                                        null=True,
+                                        blank=True)
+    commodityname = models.CharField(max_length=100,
                                      verbose_name='商品名')
     commoditycode = models.IntegerField(verbose_name='编号')
     maxlimitcount = models.IntegerField(verbose_name='最大购买数')
