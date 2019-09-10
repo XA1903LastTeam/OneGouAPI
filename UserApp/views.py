@@ -19,4 +19,4 @@ class UserAPIView(APIView):
             data = JSONRenderer().render(serializer.data)
             data = JSONParser().parse(io.BytesIO(data))
 
-            return JsonResponse({'data': data})
+        return JsonResponse({'data': data})
