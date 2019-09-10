@@ -3,5 +3,5 @@ from django.urls import path
 app_name = 'user'
 
 urlpatterns = [
-    path('list','', name=list)
+    # path('list','', name=list)
 ]
