@@ -8,3 +8,8 @@ class CityModelsSerializers(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = CityModels
         fields =('city_name',)
+
+class CityAreaModelsSerializers(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = CityAreaModels
+        fields = ('area_name',)
