@@ -4,10 +4,11 @@ from .models import TagModel, GoodsImageModel, SiwapModel, GoodsModel, GoodsInfo
 
 # Register your models here.
 class GoodsModelAdmin(admin.ModelAdmin):
-    list_display = ('categoryid', 'commodityname', 'commoditycode', 'maxlimitcount', 'originalprice', 'goodshot')
+    list_display = ('commodityname', 'commoditycode', 'maxlimitcount', 'originalprice', 'goodshot')
 
 
 class TagModelAdmin(admin.ModelAdmin):
+
     list_display = ('tag',)
 
 
