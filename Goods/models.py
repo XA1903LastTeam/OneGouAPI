@@ -17,7 +17,7 @@ class GoodsModel(YGBaseModel):
                                         blank=True)
     commodityname = models.CharField(max_length=100,
                                      verbose_name='商品名')
-    commoditycode = models.IntegerField(verbose_name='编号')
+    commoditycode = models.CharField(max_length=30,verbose_name='编号')
     maxlimitcount = models.IntegerField(verbose_name='最大购买数')
     originalprice = models.DecimalField(verbose_name='原价',
                                         max_digits=10,
