@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from UserApp.models import UserModel
 from .api import UserSeraLizer
+from CartList.models import OrderModel
 
 
 # Create your views here.
@@ -28,3 +29,7 @@ class UserAPIView(View):
         serializer = UserSeraLizer(datas)
         return JsonResponse({ 'data':serializer.data })
 
+class orderAPIView(View):
+    def get(self,request):
+
+        datas = OrderModel.objects.filter()
