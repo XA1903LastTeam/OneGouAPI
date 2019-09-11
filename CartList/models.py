@@ -5,15 +5,28 @@ from django.db import models
 from common import YGBaseModel
 
 
+
 class CartModel(YGBaseModel):
     user_id = models.OneToOneField('UserApp.UserModel', on_delete=models.CASCADE, verbose_name='用户ID',related_name='user')
 
     def __str__(self):
         return self.user_id
+    class Meta:
+        db_table = 't_cart'
+        verbose_name_plural = verbose_name = '购物车表'
+
 
 
 class OrderModel(YGBaseModel):
-    user_id = models.IntegerField(verbose_name='用户ID')
+    user_id = models.ForeignKey('UserApp.UserModel',on_delete=models.CASCADE,verbose_name='用户订单ID',related_name='user_order')
+
+
+    def __str__(self):
+        return self.user_id
+
+    class Meta:
+        db_table = 't_order'
+        verbose_name_plural = verbose_name = '订单表'
 
 
 class Order_listModel(YGBaseModel):
@@ -34,3 +47,7 @@ class Order_listModel(YGBaseModel):
     @property
     def count_price(self):
         return self.goods_id.originalprice * self.count
+
+
+    class Meta:
+        verbose_name_plural = verbose_name = '订单详情表'
