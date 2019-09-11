@@ -22,8 +22,8 @@ class SiwapModelSerializers(serializers.ModelSerializer):
 
 
 class GoodsInfoModelSerializers(serializers.ModelSerializer):
-    goods_id = GoodsModelSerializers
+    goods_id = GoodsModelSerializers()
 
     class Meta:
         model = GoodsInfoModel
-        fields = ['commodityinfo', 'sellprice', 'subtitle', 'spec', 'placeoforgin']
+        fields = ['commodityinfo', 'sellprice', 'subtitle', 'spec', 'placeoforgin', 'unit', 'goods_id']
