@@ -98,7 +98,7 @@ class GoodsImageModel(YGBaseModel):
 
     goods_id = models.ForeignKey(GoodsModel,
                                  on_delete=models.SET_NULL,
-                                 related_name='image_id',
+                                 related_name='image',
                                  verbose_name='商品id',
                                  null=True,
                                  blank=True)

@@ -3,10 +3,11 @@ from rest_framework import serializers
 from .models import NavModel
 
 
-class NavSerrializer(serializers.HyperlinkedModelSerializer):
+class NavSerrializer(serializers.ModelSerializer):
+
     class Meta:
         model = NavModel
-        fields = ['id', 'nav_child_id', 'name', 'image']
+        fields = ['id', 'actives_id', 'nav_child_id', 'name', 'image']
 
 
 # 用户API接口
