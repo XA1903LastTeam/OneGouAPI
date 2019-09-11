@@ -7,7 +7,7 @@ from .forms import UserForm
 
 class UserModelAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'phone', 'image', 'sex', 'bool')
-    # form = UserForm
+    form = UserForm
 
 
 class CommentsAdmin(admin.ModelAdmin):

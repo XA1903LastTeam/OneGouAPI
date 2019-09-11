@@ -16,7 +16,7 @@ class UserModel(YGBaseModel):
     phone = models.CharField(max_length=11,
                              verbose_name='手机号', unique=True, blank=True)
     image = models.CharField(max_length=200,
-                             verbose_name='用户头像')
+                             verbose_name='用户头像', default='photo/photo.jpg')
     sex = models.IntegerField(choices=((0, '男'), (1, '女')),
                             verbose_name='性别')
     bool = models.BooleanField(default=True,

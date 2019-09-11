@@ -2,6 +2,8 @@ import io
 
 from django.core.cache import cache
 from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
+from  django.core.files.images import ImageFile
 from django.views import View
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -48,30 +50,37 @@ class UserAPIView(View):
             else:
                 return JsonResponse({'msg': '手机号错误!'})
 
-        # 数据更新接口接收用户上传到的数据,获取数据并传入首先需要用户登陆成功,若数据超出限制返回数据异常更新失败
         elif menu == '1':
-            user = request.session.get('user', None)
-            if not user:
-                return JsonResponse({'msg': '用户未登陆'})
-            u = UserModel.objects.filter(id=user).first()
-            if u:
-                u.name = request.POST.get('name') if request.POST.get('name') else u.name
-                u.phone = request.POST.get('phone') if request.POST.get('phone') else u.phone
-                u.sex = int(request.POST.get('sex')) if request.POST.get('sex') else u.sex
-                u.sex = request.POST.get('bool') if request.POST.get('bool') else u.bool
-                file_content = ContentFile(request.FILES['image'].read())
-                print(type(file_content))
-                try:
-                    u.save()
-                except:
-                    return JsonResponse({ 'msg': '数据异常更新失败'})
-                else:
-                    return JsonResponse({'msg': '数据更新成功'})
-            else:
-                return JsonResponse({ 'msg': '用户不存在或' })
+            name = request.POST.get('name')
+            phone = request.POST.get('phone')
+            # = request.POST.get('phone')
         else:
             return JsonResponse({'msg': '无效的操作'})
 
+    # 数据更新接口接收用户上传到的数据,获取数据并传入首先需要用户登陆成功,若数据超出限制返回数据异常更新失败
+    def put(self, request):
+        user = request.session.get('user', None)
+        if not user:
+            return JsonResponse({'msg': '登陆已经失效'})
+        u = UserModel.objects.filter(id=user).first()
+        if u:
+            u.name = request.POST.get('name') if request.POST.get('name') else u.name
+            u.phone = request.POST.get('phone') if request.POST.get('phone') else u.phone
+            u.sex = int(request.POST.get('sex')) if request.POST.get('sex') else u.sex
+            u.sex = request.POST.get('bool') if request.POST.get('bool') else u.bool
+            if request.FILES.get('image'):
+                file_content = ImageFile(request.FILES['image'])
+                default_storage.delete('photo/%s.jpg' % user)
+                default_storage.save('photo/%s.jpg' % user, file_content)
+                u.image = 'photo/%s.jpg' % user
+            try:
+                u.save()
+            except:
+                return JsonResponse({'msg': '数据异常更新失败'})
+            else:
+                return JsonResponse({'msg': '数据更新成功'})
+        else:
+            return JsonResponse({'msg': '用户不存在或'})
 
 
 
