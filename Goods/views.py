@@ -5,6 +5,7 @@ from django.views.generic import View
 from .api import SiwapModelSerializers, SiwapModel
 from .api import GoodsModelSerializers, GoodsInfoModel, GoodsModel, GoodsInfoModelSerializers, GoodsImageModel, \
     GoodsImageSerializers
+from UserApp.api import NavSerrializer, NavModel
 from Funy.api import CategoryModel
 
 
@@ -16,11 +17,53 @@ class GetHomeDataView(View):
 
     def get(self, request):
         # 该请求是根据地区来获取商品数据的，目前数据只有西安地区的数据，所以不需要考虑
-        siwap = SiwapModel.objects.all()
-        serialize = SiwapModelSerializers(instance=siwap, many=True, context={'request': request})
 
+        siwap_serialize = SiwapModelSerializers(instance=SiwapModel.objects.all(), many=True)
+        nav_serialize = NavSerrializer(instance=NavModel.objects.all(), many=True)
+        goods1_cate = CategoryModel.objects.filter(name='休闲食品').first()
+        goods1_cate.goods_cate.all().order_by('goodshot')[:4:].all()
+        goods1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[:4:].all(),
+                                                 many=True)
+        goods1_1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[4:6:].all(),
+                                                   many=True)
+        goods2_serialize = GoodsModelSerializers(
+            GoodsModel.objects.filter(info_id__unit__contains='盒').order_by('goodshot')[:2:].all(), many=True)
+        goods3_cate = CategoryModel.objects.filter(name='米面杂粮').first()
+        goods3_serialize = GoodsModelSerializers(goods3_cate.goods_cate.all().order_by('goodshot')[:16:].all(),
+                                                 many=True)
+        goods4_cate = CategoryModel.objects.filter(name='干货').first()
+        goods4_serialize = GoodsModelSerializers(goods4_cate.goods_cate.all().order_by('goodshot')[:14:].all(),
+                                                 many=True)
+        goods5_cate = CategoryModel.objects.filter(name='果干/零食').first()
+        goods5_serialize = GoodsModelSerializers(goods5_cate.goods_cate.all().order_by('goodshot')[:12:].all(),
+                                                 many=True)
+        goods6_serialize = GoodsModelSerializers(
+            GoodsModel.objects.filter(commodityname__startswith='Mission').all().order_by('goodshot')[:10:].all(),
+            many=True)
         return JsonResponse({
-            'siwap_data': serialize.data
+            'siwap_data': siwap_serialize.data,
+            'nav_data': nav_serialize.data,
+            'goods1_data': goods1_serialize.data,
+            'goods1_1_data': {'data': goods1_1_serialize.data},
+            'goods2_data': {'name': '礼盒专场',
+                            'data': goods2_serialize.data},
+            'goods3_data': {
+                'name': '精致杂粮',
+                'data': goods3_serialize.data,
+                'info': ''
+            },
+            'goods4_data': {
+                'name': '品质干货',
+                'data': goods4_serialize.data
+            },
+            'goods5_data': {
+                'name': '精选坚果',
+                'data': goods5_serialize.data
+            },
+            'goods6_data': {
+                'name': '更多好货',
+                'data': goods6_serialize.data
+            }
         })
 
     def post(self, request):
@@ -51,10 +94,10 @@ class GetCateGoodDataView(View):
             serialize = GoodsModelSerializers(instance=fruit, many=True)
 
             return JsonResponse({'data': [{
-                "commodityname":serialize.data.get('commodityname'),
-                'commoditycode':serialize.data.get('commoditycode'),
-                'maxlimitcount':serialize.data.get('maxlimitcount'),
-                'originalprice':serialize.data.get('originalprice'),
+                "commodityname": serialize.data.get('commodityname'),
+                'commoditycode': serialize.data.get('commoditycode'),
+                'maxlimitcount': serialize.data.get('maxlimitcount'),
+                'originalprice': serialize.data.get('originalprice'),
             }]})
         else:
             fruit = (CategoryModel.objects.get((Q(name=er_name) & Q(father_id__name=zong_name)))).goods_cate.all()
