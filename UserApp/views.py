@@ -7,6 +7,7 @@ from rest_framework.renderers import JSONRenderer
 from UserApp.models import UserModel
 from .api import UserSeraLizer
 
+
 # Create your views here.
 class UserAPIView(View):
     def get(self, request):
@@ -14,5 +15,5 @@ class UserAPIView(View):
         if not login:
             datas = UserModel.objects.all()
             serializer = UserSeraLizer(datas, many=True)
-            return JsonResponse({ 'data':serializer.data })
 
+            return JsonResponse({'data': serializer.data})
