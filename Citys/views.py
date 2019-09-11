@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views import View
 
 
-from .api import CityModelsSerializers
+from .api import CityModelsSerializers,CityAreaModelsSerializers
 
 
 
@@ -17,4 +17,11 @@ class CityApi(View):
     def get(self,request):
         city_all = CityModels.objects.all()
         ser = CityModelsSerializers(city_all,many=True)
+        return JsonResponse({'data':ser.data})
+
+class CityAreaApi(View):
+    def get(self,request):
+        a = request.GET.get('one_id',None)
+        area_all = CityAreaModels.objects.filter(city_id=a).all()
+        ser = CityAreaModelsSerializers(area_all,many=True)
         return JsonResponse({'data':ser.data})

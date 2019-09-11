@@ -16,7 +16,10 @@ class GetHomeDataView(View):
         # 该请求是根据地区来获取商品数据的，目前数据只有西安地区的数据，所以不需要考虑
         siwap = SiwapModel.objects.all()
         serialize = SiwapModelSerializers(instance=siwap, many=True, context={'request': request})
-        return JsonResponse({'data': serialize.data})
+
+        return JsonResponse({
+            'siwap_data': serialize.data
+        })
 
     def post(self, request):
         # 获取商品详情表单
