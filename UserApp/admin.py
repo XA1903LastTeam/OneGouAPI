@@ -6,7 +6,7 @@ from .forms import UserForm
 
 
 class UserModelAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'phone', 'image', 'sex', 'bool', 'address_id')
+    list_display = ('id', 'name', 'phone', 'image', 'sex', 'bool', 'addresses')
     form = UserForm
 
 

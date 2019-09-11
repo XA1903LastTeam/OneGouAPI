@@ -5,8 +5,8 @@ from Address.models import AddressModel, DiscountModel
 
 
 class AddressModelAdmin(admin.ModelAdmin):
-    list_display = ('address', 'user_id')
-    fields = ('address', 'user_id')
+    list_display = ('address', 'user', 'state')
+    fields = ('address', 'user', 'state')
 
 
 class DiscountModelAdmin(admin.ModelAdmin):

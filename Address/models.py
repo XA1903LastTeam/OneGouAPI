@@ -7,8 +7,9 @@ from common import YGBaseModel
 
 class AddressModel(YGBaseModel):
     address = models.CharField(max_length=100, verbose_name='用户地址')
-    user_id = models.ForeignKey('UserApp.UserModel', on_delete=models.CASCADE, verbose_name='用户',
-                                related_name='address')
+    state = models.BooleanField(verbose_name='是否默认', default=True)
+    user = models.ForeignKey('UserApp.UserModel', on_delete=models.CASCADE, verbose_name='用户',
+                                related_name='addresses', null=True, blank=True)
 
     class Meta:
         db_table = 't_address'

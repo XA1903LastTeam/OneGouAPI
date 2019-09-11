@@ -15,17 +15,17 @@ class NavSerrializer(serializers.ModelSerializer):
 from .models import UserModel
 from Address.models import AddressModel
 
-class AdderssSeraLizer(serializers.ModelSerializer):
+class AdderssSeraLizer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = AddressModel
-        fields = ('id', 'address')
+        fields = ('id', 'addresses')
 
 
-class UserSeraLizer(serializers.ModelSerializer):
-    address_id = AdderssSeraLizer('id', 'address')
+class UserSeraLizer(serializers.HyperlinkedModelSerializer):
+    # addresses = AdderssSeraLizer(many=True)
 
     class Meta:
         model = UserModel
-        fields = ('id', 'name', 'phone', 'image', 'sex', 'bool', 'address_id', 'address')
+        fields = ('id', 'name', 'phone', 'image', 'sex', 'bool')
 
 

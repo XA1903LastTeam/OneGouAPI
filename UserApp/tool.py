@@ -3,6 +3,7 @@ import random
 # 验证码生成工具
 from django.http import HttpResponse
 from PIL import Image, ImageDraw, ImageFont
+from django.core.cache import cache
 
 # 随机验证码生成工具
 def _random_str(start, end):
@@ -33,10 +34,14 @@ def new_img_code(request):
 
     # 创建字体对象和字体颜色
     font_color = (0, 20, 100)
-    font = ImageFont.truetype(size=20)
+    font = ImageFont.truetype(font='static/fonts/buding.ttf' ,size=20)
 
+    str_yan = new_code_str(6)
+    # 写入缓存待用
+    cache.set('yanzhengma', str_yan, 2000)
+    print(str_yan)
     # 开始画内容
-    draw.text((5, 5), new_code_str(6), font=font, fill=font_color)
+    draw.text((5, 5), str_yan, font=font, fill=font_color)
 
     for _ in range(100):
         x = random.randint(0, 80)
