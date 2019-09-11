@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from .api import SiwapModelSerializers, SiwapModel
+from .api import GoodsModelSerializers, GoodsInfoModel, GoodsModel, GoodsInfoModelSerializers
 
 
 # Create your views here.
@@ -21,4 +22,15 @@ class GetHomeDataView(View):
         })
 
     def post(self, request):
-        pass
+        # 获取商品详情表单
+        info_name = request.POST.get('info_name', None)
+
+        if info_name:
+            goods_info = GoodsInfoModel.objects.all()
+            serialize = GoodsInfoModelSerializers(instance=goods_info, many=True)
+            return JsonResponse({'data': serialize.data})
+        else:
+            goods = GoodsModel.objects.all()
+
+            serialize = GoodsModelSerializers(instance=goods, many=True)
+            return JsonResponse({'data': serialize.data})

@@ -7,9 +7,11 @@ from django.views.decorators.csrf import csrf_exempt
 from UserApp.models import UserModel
 from .api import UserSeraLizer
 
+
 # Create your views here.
 class UserAPIView(View):
     def get(self, request):
+<<<<<<< HEAD
         datas = UserModel.objects.all()
         serializer = UserSeraLizer(datas, many=True)
         return JsonResponse({'data': serializer.data })
@@ -32,4 +34,11 @@ class UserAPIView(View):
 
 
 
+=======
+        login = request.GET.get('login', None)
+        if not login:
+            datas = UserModel.objects.all()
+            serializer = UserSeraLizer(datas, many=True)
+>>>>>>> 7b59f841375f3e38557be03250363c5b0a942dd9
 
+            return JsonResponse({'data': serializer.data})

@@ -24,4 +24,5 @@ urlpatterns = [
                   path('goods/', include('Goods.urls', namespace='goods_app')),
                   path('user/', include('UserApp.urls', namespace='user_app')),
                   path('city/', include('Citys.urls', namespace='city')),
+                  path('fun/', include('Funy.urls', namespace='fun')),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
