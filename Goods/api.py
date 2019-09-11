@@ -2,11 +2,11 @@
 from .models import SiwapModel, GoodsInfoModel, GoodsModel
 from rest_framework import serializers
 from Address.api import ActiveSerializer
-from Funy.api import CategorySerclaizer
+from Funy.api import CategoryModelSerializers
 
 
 class GoodsModelSerializers(serializers.ModelSerializer):
-    categoryid = CategorySerclaizer
+    categoryid = CategoryModelSerializers
 
     class Meta:
         model = GoodsModel

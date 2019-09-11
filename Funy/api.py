@@ -1,12 +1,21 @@
 
-
 from rest_framework import serializers
 
+from Funy.models import CategoryModel,YgeatModel
 
-from .models import CategoryModel
 
 
-class CategorySerclaizer(serializers.ModelSerializer):
+class CategoryModelSerializers(serializers.ModelSerializer):
+
     class Meta:
         model = CategoryModel
-        fields = ('name','category_url','father_id')
+        fields = '__all__'
+
+
+
+
+
+class YgeatModelSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = YgeatModel
+        fields = "__all__"

@@ -35,3 +35,6 @@ class YgeatModel(YGBaseModel):
     class Meta:
         db_table = 't_ygeat'
         verbose_name_plural = verbose_name = '吃喝玩乐'
+
+
+
