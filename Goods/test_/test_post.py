@@ -10,4 +10,4 @@ class TestPost(TestCase):
         # self.assertEqual(resp.status_code, 200, '请求失败')
 
         print(resp)
-        print(resp.text)
+        print(resp.json())

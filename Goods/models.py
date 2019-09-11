@@ -23,6 +23,7 @@ class GoodsModel(YGBaseModel):
                                         decimal_places=2)
     goodshot = models.IntegerField(verbose_name='热度')
 
+
     def __str__(self):
         return self.commodityname
 

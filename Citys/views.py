@@ -10,14 +10,15 @@ from django.views import View
 from .api import CityModelsSerializers,CityAreaModelsSerializers
 
 
-
 from .models import CityModels,CityAreaModels
 
 class CityApi(View):
     def get(self,request):
         city_all = CityModels.objects.all()
-        ser = CityModelsSerializers(city_all,many=True)
-
+        ser = CityModelsSerializers(city_all, many=True)
+        # {'A': [{},  {}],
+        #  'B': [],
+        #  'hot': []}
         return JsonResponse({'data':ser.data})
 
 

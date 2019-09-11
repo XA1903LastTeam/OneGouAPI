@@ -5,5 +5,5 @@ from .views import *
 app_name = 'goods_app'
 
 urlpatterns = [
-    path('gethome/', GetHomeDataView.as_view(), name='get_home')
+    path('home/', GetHomeDataView.as_view(), name='get_home')
 ]
