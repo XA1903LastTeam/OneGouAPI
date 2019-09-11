@@ -20,6 +20,10 @@ class CartModel(YGBaseModel):
 class OrderModel(YGBaseModel):
     user_id = models.ForeignKey('UserApp.UserModel', on_delete=models.CASCADE, verbose_name='用户订单ID',
                                 related_name='user_order')
+    card_id = models.ForeignKey('CartList.CartModel',
+                                verbose_name='所属购物车',
+                                related_name='orders',
+                                on_delete=models.CASCADE)
 
     def __str__(self):
         return self.user_id
@@ -46,9 +50,8 @@ class Order_listModel(YGBaseModel):
                                       verbose_name='商品ID')
     count = models.IntegerField(verbose_name='商品数量')
 
-    card_id = models.IntegerField(verbose_name='所属购物车')
     addr_id = models.ForeignKey('Address.AddressModel', on_delete=models.CASCADE, verbose_name='订单地址',
-                                related_name='收货地址')
+                                related_name='addrs')
 
     def __str__(self):
         return self.order_id
@@ -58,4 +61,5 @@ class Order_listModel(YGBaseModel):
         return self.goods_id.originalprice * self.count
 
     class Meta:
+        db_table = 't_orderlist'
         verbose_name_plural = verbose_name = '订单详情表'
