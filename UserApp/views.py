@@ -11,7 +11,6 @@ from .api import UserSeraLizer
 # Create your views here.
 class UserAPIView(View):
     def get(self, request):
-<<<<<<< HEAD
         datas = UserModel.objects.all()
         serializer = UserSeraLizer(datas, many=True)
         return JsonResponse({'data': serializer.data })
