@@ -44,7 +44,7 @@ class GoodsInfoModel(YGBaseModel):
 
     goods_id = models.OneToOneField(GoodsModel,
                                     on_delete=models.CASCADE,
-                                    related_name='info_id',
+                                    related_name='info',
                                     verbose_name='商品id')
     commodityinfo = models.CharField(max_length=200,
                                      verbose_name='商品说明')

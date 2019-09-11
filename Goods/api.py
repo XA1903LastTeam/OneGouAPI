@@ -11,13 +11,20 @@ class GoodsImageSerializers(serializers.ModelSerializer):
         fields = ['id', 'img1']
 
 
+class GoodsInfoModelSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = GoodsInfoModel
+        fields = ['commodityinfo', 'sellprice', 'subtitle', 'spec', 'placeoforgin', 'unit', 'goods_id']
+
+
 class GoodsModelSerializers(serializers.ModelSerializer):
     categoryid = CategoryModelSerializers
     image = GoodsImageSerializers(many=True)
+    info = GoodsInfoModelSerializers()
 
     class Meta:
         model = GoodsModel
-        fields = ['commodityname', 'commoditycode', 'maxlimitcount', 'originalprice', 'goodshot', 'info_id', 'image']
+        fields = ['commodityname', 'commoditycode', 'maxlimitcount', 'originalprice', 'goodshot', 'info', 'image']
 
 
 class SiwapModelSerializers(serializers.ModelSerializer):
@@ -26,11 +33,3 @@ class SiwapModelSerializers(serializers.ModelSerializer):
     class Meta:
         model = SiwapModel
         fields = ['active_id', 'active_img']
-
-
-class GoodsInfoModelSerializers(serializers.ModelSerializer):
-    goods_id = GoodsModelSerializers()
-
-    class Meta:
-        model = GoodsInfoModel
-        fields = ['commodityinfo', 'sellprice', 'subtitle', 'spec', 'placeoforgin', 'unit', 'goods_id']

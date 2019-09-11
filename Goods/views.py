@@ -10,6 +10,8 @@ from Funy.api import CategoryModel
 
 
 # Create your views here.
+
+# 首页所有信息
 class GetHomeDataView(View):
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
@@ -27,7 +29,7 @@ class GetHomeDataView(View):
         goods1_1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[4:6:].all(),
                                                    many=True)
         goods2_serialize = GoodsModelSerializers(
-            GoodsModel.objects.filter(info_id__unit__contains='盒').order_by('goodshot')[:2:].all(), many=True)
+            GoodsModel.objects.filter(info__unit__contains='盒').order_by('goodshot')[:2:].all(), many=True)
         goods3_cate = CategoryModel.objects.filter(name='米面杂粮').first()
         goods3_serialize = GoodsModelSerializers(goods3_cate.goods_cate.all().order_by('goodshot')[:16:].all(),
                                                  many=True)
@@ -81,28 +83,31 @@ class GetHomeDataView(View):
             return JsonResponse({'data': serialize.data})
 
 
+# 根据分类获取商品信息
 class GetCateGoodDataView(View):
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    def post(self, request):
-        zong_name = request.POST.get('yijifenleiming')
-        er_name = request.POST.get('erjifenleiming')
-        if not er_name or er_name == '全部':
-            fruit = (CategoryModel.objects.get(name=zong_name)).goods_cate.all()
+    def get(self, request):
+        oneid = request.GET.get('oneid')
+        twoid = request.GET.get('twoid', None)
+        if not twoid:
+            fruit = (CategoryModel.objects.get(id=oneid)).goods_cate.all()
             serialize = GoodsModelSerializers(instance=fruit, many=True)
-
-            return JsonResponse({'data': [{
-                "commodityname": serialize.data.get('commodityname'),
-                'commoditycode': serialize.data.get('commoditycode'),
-                'maxlimitcount': serialize.data.get('maxlimitcount'),
-                'originalprice': serialize.data.get('originalprice'),
-            }]})
+            return JsonResponse({
+                'code': 8000,
+                'data': serialize.data,
+                'msg': '成功'
+            })
         else:
-            fruit = (CategoryModel.objects.get((Q(name=er_name) & Q(father_id__name=zong_name)))).goods_cate.all()
+            fruit = (CategoryModel.objects.get((Q(id=twoid) & Q(father_id__id=oneid)))).goods_cate.all()
             serialize = GoodsModelSerializers(instance=fruit, many=True)
-            return JsonResponse({'data': serialize.data})
+            return JsonResponse({
+                'code': 8000,
+                'data': serialize.data,
+                'msg': '成功'
+            })
 
 
 class GetGoodInfoView(View):
@@ -111,7 +116,11 @@ class GetGoodInfoView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        code = request.POST.get('goods_code')
+        code = request.GET.get('goods_code')
         goods_code = GoodsInfoModel.objects.filter(goods_id__commoditycode=code).all()
         serialize = GoodsInfoModelSerializers(instance=goods_code, many=True)
-        return JsonResponse({'data': serialize.data})
+        return JsonResponse({
+            'code': 8000,
+            'data': serialize.data,
+            'msg': '成功'
+        })
