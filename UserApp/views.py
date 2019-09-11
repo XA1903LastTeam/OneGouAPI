@@ -28,8 +28,3 @@ class UserAPIView(View):
         serializer = UserSeraLizer(datas)
         return JsonResponse({ 'data':serializer.data })
 
-        login = request.GET.get('login', None)
-        if not login:
-            datas = UserModel.objects.all()
-            serializer = UserSeraLizer(datas, many=True)
-            return JsonResponse({'data': serializer.data})
