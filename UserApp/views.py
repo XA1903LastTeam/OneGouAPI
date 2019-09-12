@@ -15,7 +15,6 @@ from .api import UserSeraLizer
 # Create your views here.
 # 用户登陆接口,接收用户手机号和模拟短信验证码,登陆成功后将成功登陆的用户ID写入session中，时间设置位关闭连接时清除session
 
-
 class UserAPIView(View):
     def get(self, request):
         datas = UserModel.objects.all()
@@ -26,7 +25,6 @@ class UserAPIView(View):
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
-
 
     def post(self, request):
         menu = request.POST.get('menu', None)
@@ -49,11 +47,33 @@ class UserAPIView(View):
                     return JsonResponse({'msg': '该用户未注册'})
             else:
                 return JsonResponse({'msg': '手机号错误!'})
-
+        # 用户创建处理函数,使用图片验证码模拟手机验证码注册账号
         elif menu == '1':
-            name = request.POST.get('name')
-            phone = request.POST.get('phone')
-            # = request.POST.get('phone')
+            u = UserModel()
+            yan = request.POST.get('yan')
+            if yan == cache.get('yanzhengma'):
+                u.name = request.POST.get('name')
+                u.phone = request.POST.get('phone')
+                u.sex = int(request.POST.get('sex'))
+                u.bool = request.POST.get('bool')
+                try:
+                    u.save()
+                except:
+                    return JsonResponse({ 'msg': '数据异常创建失败'})
+                else:
+                    if request.FILES.get('image'):
+                        file_content = ImageFile(request.FILES['image'])
+                        default_storage.delete('photo/%s.jpg' % u.id)
+                        default_storage.save('photo/%s.jpg' % u.id, file_content)
+                        u.image = 'photo/%s.jpg' % u.id
+                        try:
+                            u.save()
+                        except:
+                            return JsonResponse({'msg': '图片数据异使用默认头像, 用户创建成功!'})
+                    return JsonResponse({ 'msg': '用户创建成功' })
+
+            else:
+                JsonResponse({'msg': '验证码错误'})
         else:
             return JsonResponse({'msg': '无效的操作'})
 
@@ -82,9 +102,22 @@ class UserAPIView(View):
         else:
             return JsonResponse({'msg': '用户不存在或'})
 
-
-
-
-
-
-
+    def delete(self, request):
+        print('执行删除')
+        user = request.session.get('user')
+        if user:
+           u = UserModel.objects.filter(id=user).first()
+           if u:
+               u.bool = False
+               try:
+                   u.save()
+               except:
+                   return JsonResponse({ 'msg': '数据异常用户注销失败'})
+               else:
+                   request.session.delete('user')
+                   print(request.session.get('user'))
+                   return JsonResponse({ 'msg': '用户注销成功'})
+           else:
+               return JsonResponse({ 'msg': '该用户不存在'})
+        else:
+            return JsonResponse({ 'msg': '用户未登陆'})
