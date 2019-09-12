@@ -74,6 +74,14 @@ class UserAPIView(View):
 
             else:
                 JsonResponse({'msg': '验证码错误'})
+        elif menu == '2':
+            u = request.session.get('user')
+            print(u)
+            if u:
+                request.session.flush()
+                return JsonResponse({ 'msg': '删除成功'})
+            else:
+                return JsonResponse({'msg': '用户未登陆'})
         else:
             return JsonResponse({'msg': '无效的操作'})
 
