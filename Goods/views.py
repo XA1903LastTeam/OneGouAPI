@@ -23,10 +23,10 @@ class GetHomeDataView(View):
         siwap_serialize = SiwapModelSerializers(instance=SiwapModel.objects.all(), many=True)
         nav_serialize = NavSerrializer(instance=NavModel.objects.all(), many=True)
         goods1_cate = CategoryModel.objects.filter(name='休闲食品').first()
-        goods1_cate.goods_cate.all().order_by('goodshot')[:4:].all()
-        goods1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[:4:].all(),
+
+        goods1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[:5:].all(),
                                                  many=True)
-        goods1_1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[4:6:].all(),
+        goods1_1_serialize = GoodsModelSerializers(goods1_cate.goods_cate.all().order_by('goodshot')[5:7:].all(),
                                                    many=True)
         goods2_serialize = GoodsModelSerializers(
             GoodsModel.objects.filter(info__unit__contains='盒').order_by('goodshot')[:2:].all(), many=True)
