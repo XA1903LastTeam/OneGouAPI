@@ -38,9 +38,10 @@ class UserAPIView(View):
                 if UserModel.objects.filter(phone=phone).first():
                     if yan == cache.get('yanzhengma'):
                         user = UserModel.objects.filter(phone=phone).first()
-                        request.session['user'] = user.id
+                        request.session['user'] = UserSeraLizer(user).data
+                        print(request.session['user'])
                         request.session.set_expiry(0)
-                        return JsonResponse({'msg': '登陆成功'})
+                        return JsonResponse({'msg': '登陆成功', 'code': 200, })
                     else:
                         return JsonResponse({'msg': '验证码错误'})
                 else:
@@ -79,7 +80,7 @@ class UserAPIView(View):
             print(u)
             if u:
                 request.session.flush()
-                return JsonResponse({ 'msg': '删除成功'})
+                return JsonResponse({ 'code': 200, 'msg': '退出登陆成功'})
             else:
                 return JsonResponse({'msg': '用户未登陆'})
         else:
