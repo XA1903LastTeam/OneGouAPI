@@ -43,7 +43,7 @@ class CommentsModel(YGBaseModel):
                                     verbose_name='评论时间')
 
     def __str__(self):
-        return self.id
+        return self.comment_time
 
     class Meta:
         db_table = 't_comments'
