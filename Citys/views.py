@@ -5,6 +5,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 
 from .api import CityModelsSerializers, CityAreaModelsSerializers
 
@@ -62,11 +63,18 @@ class CityAreaApi(View):
 
 
 class SetCity(View):
+    @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
 
     def post(self, request):
         area_id = request.POST.get('area_id')
         city = CityAreaModels.objects.get(pk=area_id).city_id
         request.session['city'] = CityModelsSerializers(instance=city).data
         return JsonResponse({'status': 200})
+
+
+def SearchCategory(View):
+    pass
+
