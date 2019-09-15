@@ -1,4 +1,5 @@
 import io
+import json
 
 from django.http import JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -67,9 +68,8 @@ class SetCity(View):
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-
     def post(self, request):
-        area_id = request.POST.get('area_id')
+        area_id = json.loads(request.body, encoding='utf-8').get('area_id')
         city = CityAreaModels.objects.get(pk=area_id).city_id
         request.session['city'] = CityModelsSerializers(instance=city).data
         return JsonResponse({'status': 200})
@@ -77,4 +77,3 @@ class SetCity(View):
 
 def SearchCategory(View):
     pass
-
