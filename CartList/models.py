@@ -26,7 +26,11 @@ class OrderModel(YGBaseModel):
                                 on_delete=models.CASCADE)
 
     def __str__(self):
+<<<<<<< HEAD
         return '订单'
+=======
+        return self.user_id_id
+>>>>>>> 735d54521af4212aa13d004c252e945bc42505fd
 
     class Meta:
         db_table = 't_order'
@@ -54,11 +58,16 @@ class Order_listModel(YGBaseModel):
                                 related_name='addrs')
 
     def __str__(self):
-        return self.order_id
+        return self.order_id_id
+
 
     @property
     def count_price(self):
-        return self.goods_id.originalprice * self.count
+        return self.goods_id.goodshot* self.count
+
+    @property
+    def goods_name(self):
+        return self.goods_id.categoryid
 
     class Meta:
         db_table = 't_orderlist'

@@ -14,10 +14,10 @@ class OrderModelAdmin(admin.ModelAdmin):
 
 
 class OrderListModelAdmin(admin.ModelAdmin):
-    list_display = ('order_id', 'start_time', 'order_statud', 'count', 'addr_id')
-    fields = ('order_id', 'start_time', 'order_statud', 'count''addr_id')
+    list_display = ('order_id', 'start_time', 'order_statud', 'count', 'count_price','addr_id')
+    fields = ('order_id', 'start_time', 'order_statud', 'count','addr_id')
 
 
 admin.site.register(CartModel, CartModelAdmin)
-admin.site.register(OrderModel, OrderModelAdmin)
 admin.site.register(Order_listModel, OrderListModelAdmin)
+admin.site.register(OrderModel, OrderModelAdmin)
