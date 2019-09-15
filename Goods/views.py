@@ -43,6 +43,7 @@ class GetHomeDataView(View):
             GoodsModel.objects.filter(commodityname__startswith='Mission').all().order_by('goodshot')[:10:].all(),
             many=True)
         return JsonResponse({
+            'city': request.session.get('city', None),
             'siwap_data': siwap_serialize.data,
             'nav_data': nav_serialize.data,
             'goods1_data': goods1_serialize.data,
