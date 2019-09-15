@@ -7,7 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from UserApp.models import UserModel
 from Address.models import AddressModel
+from CartList.models import Order_listModel, OrderGoods
 from CartList.api import Order_listSeraLizer
+from Goods.api import GoodsModelSerializers
 
 from .api import UserSeraLizer
 from .api import AdderssSeraLizer
@@ -192,14 +194,35 @@ class AddressAPIView(View):
 # 用户订单接口
 class UserOrder(View):
 
+    # 接收UserID返回该属于用户所有订单
+    def get(self, request):
+        user = request.GET.get('user')
+        data = {}
+        if UserModel.objects.filter(id=user):
+            order = Order_listModel.objects.filter(user=user)
+            for o in order:
+                data[o.id] = Order_listSeraLizer(o).data
+                goods = OrderGoods.objects.filter(order=o)
+                for g in goods:
+                    data[o.id][g.id] = GoodsModelSerializers(g.goods).data
+            return JsonResponse({ 'code': 200, 'msg': '查询成功', 'data':data})
+        else:
+            return JsonResponse({ 'code': 400, 'msg': '查找的用户不存在'})
+
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
-    # 接收UserID返回该用户所有订单
-    def get(self, request):
-        user = request.GET.get('user')
-        user = UserModel.objects.filter(id=user).first()
-        datas =Order_listSeraLizer(user.user_order.order, many=True)
-        return JsonResponse({'code': 200})
-        # return JsonResponse({ 'code': 200, 'msg': '获取成功', 'data': datas.data})
+    # 接收订单ID返回该订单所有的商品
+    def post(self, request):
+        order = request.POST.get('order')
+        print(order)
+        data = {}
+        if Order_listModel.objects.filter(id=order):
+            goods = OrderGoods.objects.filter(order=order)
+            for g in goods:
+                data[g.id] = GoodsModelSerializers(g.goods).data
+                data[g.id]['count'] = g.count
+            return JsonResponse({ 'code': 200, 'msg': '查询成功', 'data': data})
+        else:
+            return JsonResponse( { 'code': 400, 'msg': '该订单不存在'})

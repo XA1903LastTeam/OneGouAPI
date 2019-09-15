@@ -9,7 +9,7 @@ class CartModelAdmin(admin.ModelAdmin):
 
 
 class OrderListModelAdmin(admin.ModelAdmin):
-    list_display = ('user', 'start_time', 'order_statud','addr_id')
+    list_display = ('id', 'user', 'start_time', 'order_statud','addr_id')
     fields = ('user', 'start_time', 'order_statud', 'addr_id')
 
 
