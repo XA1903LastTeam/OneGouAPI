@@ -26,11 +26,7 @@ class OrderModel(YGBaseModel):
                                 on_delete=models.CASCADE)
 
     def __str__(self):
-<<<<<<< HEAD
-        return '订单'
-=======
         return self.user_id_id
->>>>>>> 735d54521af4212aa13d004c252e945bc42505fd
 
     class Meta:
         db_table = 't_order'

@@ -202,4 +202,4 @@ class UserOrder(View):
         user = UserModel.objects.filter(id=user).first()
         datas =Order_listSeraLizer(user.user_order.order, many=True)
         return JsonResponse({'code': 200})
-        return JsonResponse({ 'code': 200, 'msg': '获取成功', 'data': datas.data})
+        # return JsonResponse({ 'code': 200, 'msg': '获取成功', 'data': datas.data})
