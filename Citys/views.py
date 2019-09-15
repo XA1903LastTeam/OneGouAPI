@@ -62,3 +62,6 @@ class CityAreaApi(View):
         ser = CityAreaModelsSerializers(area_all,many=True)
         return JsonResponse({'data':ser.data})
 
+
+def SearchCategory(View):
+    pass
