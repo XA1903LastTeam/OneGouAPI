@@ -63,5 +63,3 @@ class CityAreaApi(View):
         return JsonResponse({'data':ser.data})
 
 
-def SearchCategory(View):
-    pass

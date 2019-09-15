@@ -38,3 +38,14 @@ class YgeatView(View):
         return JsonResponse({
             'data':ser.data
         })
+
+
+class SearchCategory(View):
+    def get(self, request):
+        name = request.GET.get('info', None)
+        id = CategoryModel.objects.filter(name=name).first()
+        datas = CategoryModel.objects.filter(father_id=id).all()
+        cateinfo = CategoryModelSerializers(datas,many=True)
+        return JsonResponse({
+            'data':cateinfo.data
+        })
