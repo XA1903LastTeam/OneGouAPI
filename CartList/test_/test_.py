@@ -5,7 +5,7 @@ from django.http import request
 
 
 class TestPost(TestCase):
-    def test_down(self):
+    def test_1_down(self):
         url = 'http://localhost:8000/cart/orderdown/'
         data = {
             'order_num': 2,
@@ -16,3 +16,4 @@ class TestPost(TestCase):
         }
         resp = requests.post(url, data=data)
         print(resp.text)
+

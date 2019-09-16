@@ -147,7 +147,7 @@ class OrderDownView(View):
         })
 
 
-class CartSum(View):
+class CartSumView(View):
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
