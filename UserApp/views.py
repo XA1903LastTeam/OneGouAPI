@@ -45,11 +45,11 @@ class UserAPIView(View):
                         request.session.set_expiry(0)
                         return JsonResponse({'msg': '登陆成功', 'code': 200, })
                     else:
-                        return JsonResponse({'msg': '验证码错误'})
+                        return JsonResponse({'msg': '验证码错误', 'code': 400})
                 else:
-                    return JsonResponse({'msg': '该用户未注册'})
+                    return JsonResponse({'msg': '该用户未注册', 'code': 400})
             else:
-                return JsonResponse({'msg': '手机号错误!'})
+                return JsonResponse({'msg': '手机号错误!', 'code': 400})
         # 用户创建处理函数,使用图片验证码模拟手机验证码注册账号
         elif menu == '1':
             u = UserModel()
@@ -114,7 +114,6 @@ class UserAPIView(View):
             return JsonResponse({'msg': '无效的操作'})
 
     # 数据更新接口接收用户上传到的数据,获取数据并传入首先需要用户登陆成功,若数据超出限制返回数据异常更新失败
-
     def delete(self, request):
         print('执行删除')
         user = request.session.get('user')
@@ -154,7 +153,7 @@ class AddressAPIView(View):
             address = AdderssSeraLizer(datas, many=True)
             return JsonResponse({'code': 200, 'data': address.data})
 
-        # 接收userID和address数据创建新的地址
+        # 根据登陆的userID和address数据创建新的地址
         elif menu == '1':
             user = request.session.get('user')
             address = AddressModel()
