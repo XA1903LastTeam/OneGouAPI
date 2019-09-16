@@ -6,7 +6,7 @@ from .api import SiwapModelSerializers, SiwapModel
 from .api import GoodsModelSerializers, GoodsInfoModel, GoodsModel, GoodsInfoModelSerializers, GoodsImageModel, \
     GoodsImageSerializers
 from UserApp.api import NavSerrializer, NavModel
-from Funy.api import CategoryModel
+from Funy.models import CategoryModel
 
 
 # Create your views here.
@@ -92,22 +92,32 @@ class GetCateGoodDataView(View):
 
     def get(self, request):
         oneid = request.GET.get('oneid')
-        twoid = request.GET.get('twoid', None)
+        twoid = request.GET.get('twoid')
+        print(oneid)
+        print(twoid)
         if not twoid:
+            print('132')
             fruit = (CategoryModel.objects.get(id=oneid)).goods_cate.all()
             serialize = GoodsModelSerializers(instance=fruit, many=True)
+            print(serialize.data)
             return JsonResponse({
-                'code': 8000,
+                'code': 200,
+                'data': serialize.data,
+                'msg': '成功'
+            })
+
+        elif twoid:
+            fruit = (CategoryModel.objects.get(id=twoid)).goods_cate.all()
+            serialize = GoodsModelSerializers(instance=fruit, many=True)
+            return JsonResponse({
+                'code': 200,
                 'data': serialize.data,
                 'msg': '成功'
             })
         else:
-            fruit = (CategoryModel.objects.get((Q(id=twoid) & Q(father_id__id=oneid)))).goods_cate.all()
-            serialize = GoodsModelSerializers(instance=fruit, many=True)
             return JsonResponse({
-                'code': 8000,
-                'data': serialize.data,
-                'msg': '成功'
+                'code': 200,
+                'msg': '失败'
             })
 
 
@@ -121,7 +131,7 @@ class GetGoodInfoView(View):
         goods_code = GoodsInfoModel.objects.filter(goods_id__commoditycode=code).all()
         serialize = GoodsInfoModelSerializers(instance=goods_code, many=True)
         return JsonResponse({
-            'code': 8000,
+            'code': 200,
             'data': serialize.data,
             'msg': '成功'
         })

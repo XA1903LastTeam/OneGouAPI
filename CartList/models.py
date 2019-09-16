@@ -15,15 +15,12 @@ class CartModel(YGBaseModel):
                               verbose_name='商品',
                               related_name='cart')
 
-
     def __str__(self):
         return self.user_id
 
     class Meta:
         db_table = 't_cart'
         verbose_name_plural = verbose_name = '购物车表'
-
-
 
 
 class Order_listModel(YGBaseModel):
@@ -48,6 +45,7 @@ class Order_listModel(YGBaseModel):
     class Meta:
         db_table = 't_orderlist'
         verbose_name_plural = verbose_name = '订单详情表'
+
 
 class OrderGoods(YGBaseModel):
     order = models.ForeignKey('Order_listModel',
