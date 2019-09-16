@@ -7,6 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 
 from CartList.models import OrderGoods
+from UserApp.models import UserModel
 from .api import Order_list_1_SeraLier, Order_listModel, CartModel
 from Goods.api import GoodsModel, GoodsModel_twoSerializers, GoodsInfoModel, GoodsImage_OneSerializers, GoodsImageModel
 from Address.models import AddressModel
@@ -20,8 +21,9 @@ class GetCartView(View):
     def post(self, request):
         goods = request.POST.get('goods_id')
         users = request.session.get('user')
+        print(users)
 
-        order_id = Order_listModel.objects.filter(order_id__user_id=users).first()
+        order_id = Order_listModel.objects.filter(user_id=users).first()
         count = Order_list_1_SeraLier(instance=order_id).data
 
         goods_info = GoodsModel.objects.filter(id=users).first()
@@ -46,42 +48,56 @@ class AddCartView(View):
 
     def post(self, request):
         goods_id = request.POST.get('goods_id')
-        user_id = request.session.get('user')
+        users = request.session.get('user')
+        user_id = users['id']
+        userse = UserModel.objects.get(id=user_id)
+        print(user_id)
 
-        # 判断用户是否有购物车
         user_cart = CartModel.objects.filter(user_id=user_id).all()
-        address = AddressModel.objects.get(Q(user=user_id) & Q(state=True))
-        address_id = address.id
+        print(user_cart)
+        address_id = AddressModel.objects.filter(Q(user_id=user_id) & Q(state=True)).first()
+        print(address_id)
+        add = request.POST.get('add_goods')
+        sub = request.POST.get('sub_goods')
+        if add:
+            order_list = OrderGoods.objects.filter(order__user__id=user_id, goods_id=goods_id).first()
+            print(order_list)
+            print('数量', order_list.count)
 
-        if not user_cart:
-            CartModel(user_id=user_id).save()
+            if order_list:
+                order_list.count += 1
+                order_list.save()
+                return JsonResponse({
+                    'code': 200,
+                    'msg': '商品增加成功'
+                })
+
+            else:
+                order = Order_listModel.objects.filter(user_id=user_id).first()
+                print('Order_______', order)
+
+                start_time = str(datetime.now())
+                order_statud = 1
+                goods = GoodsModel.objects.get(id=goods_id)
+                Order_listModel(user=userse, start_time=start_time, order_statud=order_statud,
+                                addr_id=address_id).save()
+                OrderGoods(order=order, goods=goods, count=1).save()
+                OrderGoods(count=1).save()
+
+        elif sub:
+            order_list = OrderGoods.objects.filter(order__user__id=user_id, goods_id=goods_id).first()
+            if order_list:
+                order_list.count -= 1
+                order_list.save()
+                return JsonResponse({
+                    'code': 200,
+                    'msg': '商品减少成功'
+                })
         else:
-            add = request.POST.get('add_goods')
-            sub = request.POST.get('sub_goods')
-            card_id = CartModel.objects.get(user_id=user_id)
-            if add:
-                order_list = Order_listModel.objects.filter(Q(order_id__card_id=card_id) & Q(goods_id=goods_id)).first()
-                if order_list:
-                    order_list_1 = OrderGoods()
-                    order_list_count = order_list_1.count + 1
-                    Order_listModel(count=order_list_count).save()
-                else:
-                    order = Order_listModel(user_id=user_id, card_id=card_id)
-                    order_id = order.id
-
-                    start_time = str(datetime.now())
-                    order_statud = 0
-                    goods_id = goods_id
-                    count = 1
-                    addr_id = address_id
-                    Order_listModel(order_id=order_id, start_time=start_time, order_statud=order_statud,
-                                    goods_id=goods_id, count=count, addr_id=addr_id).save()
-            if sub:
-                order_list = Order_listModel.objects.filter(Q(order_id__card_id=card_id) & Q(goods_id=goods_id)).first()
-                if order_list:
-                    order_list_1 = OrderGoods()
-                    order_list_count = order_list_1.count - 1
-                    Order_listModel(count=order_list_count).save()
+            return JsonResponse({
+                'code': 200,
+                'msg': '请从操作'
+            })
 
 
 class OrderDownView(View):
@@ -129,5 +145,3 @@ class OrderDownView(View):
                 }
             ]
         })
-
-

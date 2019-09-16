@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 import requests
+from django.http import request
 
 
 class TestPost(TestCase):
