@@ -5,7 +5,8 @@ from django.utils.deprecation import MiddlewareMixin
 class yan_login(MiddlewareMixin):
 
     def process_request(self, request):
-        url_list = ['user/list/']
+        url_list = ['user/list/', 'user/address/', 'user/order/']
+        url_list = []
         if request.path in url_list:
             if not request.session.get('user'):
                 return JsonResponse({ 'msg': '用户未登陆'})

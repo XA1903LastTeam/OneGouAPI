@@ -5,7 +5,8 @@ from django.db.models import Q
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-from .models import OrderModel
+
+from CartList.models import OrderGoods
 from .api import Order_list_1_SeraLier, Order_listModel, CartModel
 from Goods.api import GoodsModel, GoodsModel_twoSerializers, GoodsInfoModel, GoodsImage_OneSerializers, GoodsImageModel
 from Address.models import AddressModel
@@ -61,11 +62,11 @@ class AddCartView(View):
             if add:
                 order_list = Order_listModel.objects.filter(Q(order_id__card_id=card_id) & Q(goods_id=goods_id)).first()
                 if order_list:
-                    order_list_1 = Order_listModel()
+                    order_list_1 = OrderGoods()
                     order_list_count = order_list_1.count + 1
                     Order_listModel(count=order_list_count).save()
                 else:
-                    order = OrderModel(user_id=user_id, card_id=card_id)
+                    order = Order_listModel(user_id=user_id, card_id=card_id)
                     order_id = order.id
 
                     start_time = str(datetime.now())
@@ -78,7 +79,7 @@ class AddCartView(View):
             if sub:
                 order_list = Order_listModel.objects.filter(Q(order_id__card_id=card_id) & Q(goods_id=goods_id)).first()
                 if order_list:
-                    order_list_1 = Order_listModel()
+                    order_list_1 = OrderGoods()
                     order_list_count = order_list_1.count - 1
                     Order_listModel(count=order_list_count).save()
 
