@@ -45,8 +45,8 @@ class YgeatView(View):
 class SearchCategory(View):
     def get(self, request):
         name = request.GET.get('info', None)
-        if name:
-            id = CategoryModel.objects.filter(name=name).first()
+        id = CategoryModel.objects.filter(name=name).first()
+        if id:
             datas = CategoryModel.objects.filter(father_id=id).all()
             cateinfo = CategoryModelSerializers(datas,many=True)
             return JsonResponse({
@@ -56,5 +56,5 @@ class SearchCategory(View):
         else:
             return JsonResponse({
                 'mesg':'未查询到对应商品',
-                'status': 200
+                'status': 400
             })
