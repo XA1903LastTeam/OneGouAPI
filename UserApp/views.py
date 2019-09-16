@@ -10,6 +10,7 @@ from Address.models import AddressModel
 from CartList.models import Order_listModel, OrderGoods
 from CartList.api import Order_listSeraLizer
 from Goods.api import GoodsModelSerializers
+from CartList.models import CartModel
 
 from .api import UserSeraLizer
 from .api import AdderssSeraLizer
@@ -226,3 +227,18 @@ class UserOrder(View):
             return JsonResponse({ 'code': 200, 'msg': '查询成功', 'data': data})
         else:
             return JsonResponse( { 'code': 400, 'msg': '该订单不存在'})
+
+
+# 用户购物车接口
+class UserCart(View):
+    # 接收UserID返回所有的Cart所有商品信息
+    def get(self, request):
+        user = request.GET.get('user')
+        goods = CartModel.objects.filter(user=user)
+        data = {}
+        if goods:
+            for g in goods:
+                data[g.id] = GoodsModelSerializers(g.goods).data
+            return JsonResponse({ 'code': 200, 'msg': '查询成功', 'data': data})
+        else:
+            return JsonResponse({ 'code': 400, 'msg': '该用户购物车为空'})
