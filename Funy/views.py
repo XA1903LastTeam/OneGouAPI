@@ -15,7 +15,8 @@ class CategoryView(View):
         ser = CategoryModelSerializers(datas,many=True)
 
         return JsonResponse({
-            'data':ser.data
+            'data':ser.data,
+            'status': 200
         })
 
 class CatechildView(View):
@@ -27,7 +28,8 @@ class CatechildView(View):
             datas = CategoryModel.objects.filter(father_id='ccd5a8ef-66ca-48d2-962c-613d23500cf9')
         ser = CategoryModelSerializers(datas, many=True)
         return JsonResponse({
-            'data': ser.data
+            'data': ser.data,
+            'status':200
         })
 
 class YgeatView(View):
@@ -36,7 +38,8 @@ class YgeatView(View):
         ser = YgeatModelSerializers(datas,many=True)
 
         return JsonResponse({
-            'data':ser.data
+            'data':ser.data,
+            'status': 200
         })
 
 
@@ -47,5 +50,6 @@ class SearchCategory(View):
         datas = CategoryModel.objects.filter(father_id=id).all()
         cateinfo = CategoryModelSerializers(datas,many=True)
         return JsonResponse({
-            'data':cateinfo.data
+            'data':cateinfo.data,
+            'status': 200
         })
