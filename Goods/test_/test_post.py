@@ -11,3 +11,10 @@ class TestPost(TestCase):
 
         print(resp)
         print(resp.text)
+
+class TestGet(TestCase):
+    def test_1_post(self):
+        url = 'http://localhost:8000/goods/getcate/?oneid=ad7f227d-73c0-44a2-9edd-924006deb134'
+        resp = requests.get(url)
+
+        print(resp.text)

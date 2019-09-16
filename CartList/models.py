@@ -6,11 +6,13 @@ from common import YGBaseModel
 
 
 class CartModel(YGBaseModel):
-    user_id = models.OneToOneField('UserApp.UserModel', on_delete=models.CASCADE, verbose_name='用户ID',
+    user_id = models.OneToOneField('UserApp.UserModel',
+                                   on_delete=models.CASCADE,
+                                   verbose_name='用户ID',
                                    related_name='user')
 
     def __str__(self):
-        return self.user_id
+        return self.user_id_id
 
     class Meta:
         db_table = 't_cart'
@@ -26,7 +28,7 @@ class OrderModel(YGBaseModel):
                                 on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.user_id
+        return self.id
 
     class Meta:
         db_table = 't_order'
@@ -54,7 +56,7 @@ class Order_listModel(YGBaseModel):
                                 related_name='addrs')
 
     def __str__(self):
-        return self.order_id
+        return self.order_id_id
 
     @property
     def count_price(self):

@@ -15,7 +15,7 @@ class OrderModelAdmin(admin.ModelAdmin):
 
 class OrderListModelAdmin(admin.ModelAdmin):
     list_display = ('order_id', 'start_time', 'order_statud', 'count', 'addr_id')
-    fields = ('order_id', 'start_time', 'order_statud', 'count''addr_id')
+    fields = ('order_id', 'start_time', 'order_statud', 'count','addr_id')
 
 
 admin.site.register(CartModel, CartModelAdmin)

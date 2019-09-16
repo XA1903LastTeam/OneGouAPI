@@ -21,7 +21,7 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('goods/', include('Goods.urls', namespace='goods')),
                   path('user/', include('UserApp.urls', namespace='user')),
-                  path('goods/', include('Goods.urls', namespace='goods_app')),
+                  path('cart/',include('CartList.urls',namespace='cart')),
                   path('user/', include('UserApp.urls', namespace='user_app')),
                   path('city/', include('Citys.urls', namespace='city')),
                   path('fun/', include('Funy.urls', namespace='fun')),
