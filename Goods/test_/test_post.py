@@ -19,3 +19,11 @@ class TestGet(TestCase):
         resp = requests.get(url)
 
         print(resp.text)
+
+class TestCode(TestCase):
+    def test_1_post(self):
+        url = 'http://localhost:8000/goods/getinfo/?goods_code=6000036238'
+
+        resp = requests.post(url)
+
+        print(resp.text)
