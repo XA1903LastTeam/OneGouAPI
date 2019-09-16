@@ -214,7 +214,7 @@ class UserOrder(View):
                     data[o.id]['count'] = g.count
             return JsonResponse({ 'code': 200, 'msg': '查询成功', 'data':data})
         else:
-            return JsonResponse({ 'code': 400, 'msg': '查找的用户不存在'})
+            return JsonResponse({ 'code': 400, 'msg': '查找的用户不存在' })
 
     @csrf_exempt
     def dispatch(self, request, *args, **kwargs):

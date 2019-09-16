@@ -14,6 +14,8 @@ class CartModel(YGBaseModel):
                               on_delete=models.CASCADE,
                               verbose_name='商品',
                               related_name='cart')
+    count = models.IntegerField(verbose_name='数量',
+                                default=1)
 
     def __str__(self):
         return self.user_id

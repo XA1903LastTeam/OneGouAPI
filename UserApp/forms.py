@@ -14,7 +14,7 @@ class UserForm(forms.ModelForm):
                            min_length=8,
                            max_length=20,
                            required=True,
-                           # 该字段错误定制
+                           # 该字段定制
                             error_messages={
                                 'required': '昵称不能为空',
                                 "min_length": '昵称长度不能小于8位',

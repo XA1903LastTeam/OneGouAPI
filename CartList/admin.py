@@ -4,8 +4,8 @@ from .models import  Order_listModel, CartModel, OrderGoods
 
 # Register your models here.
 class CartModelAdmin(admin.ModelAdmin):
-    list_display = ('user', 'goods')
-    fields = ('user', 'goods')
+    list_display = ('user', 'goods', 'count')
+    fields = ('user', 'goods', 'count')
 
 
 class OrderListModelAdmin(admin.ModelAdmin):
