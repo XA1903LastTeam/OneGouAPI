@@ -145,3 +145,24 @@ class OrderDownView(View):
                 }
             ]
         })
+
+
+class CartSum(View):
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request):
+        # 获取当前用户所有的订单
+        user = request.session.get('user')
+        user_id = user['id']
+        order = OrderGoods.objects.filter(order__user__id=user_id).all()
+        sum = 0
+        for i in order:
+            sum += (i.count * i.goods.originalprice)
+
+        return JsonResponse({
+            'code': 200,
+            'sum':sum,
+            'msg':'总价计算成功'
+        })
