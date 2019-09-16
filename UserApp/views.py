@@ -17,7 +17,6 @@ from .api import AdderssSeraLizer
 
 # Create your views here.
 # 用户登陆接口,接收用户手机号和模拟短信验证码,登陆成功后将成功登陆的用户ID写入session中，时间设置位关闭连接时清除session
-
 class UserAPIView(View):
     def get(self, request):
         datas = UserModel.objects.all()
@@ -73,11 +72,11 @@ class UserAPIView(View):
                         try:
                             u.save()
                         except:
-                            return JsonResponse({'msg': '图片数据异使用默认头像, 用户创建成功!'})
+                            return JsonResponse({'msg': '图片数据异使用默认头像, 用户创建成功!', 'code': 200})
                     return JsonResponse({ 'msg': '用户创建成功' })
-
             else:
-                JsonResponse({'msg': '验证码错误'})
+                return JsonResponse({'msg': '验证码错误'})
+        # 用户注销登陆操作
         elif menu == '2':
             u = request.session.get('user')
             print(u)
@@ -145,21 +144,23 @@ class AddressAPIView(View):
         return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
-        # 接收用户ID返回该用户所有的地址
+        # 返回该登陆用户所有的地址
         menu = request.POST.get('menu')
         if menu == '0':
-            user = request.POST.get('user')
-            datas = AddressModel.objects.filter(user=user)
+            user = request.session.get('user')
+            if not user:
+                return JsonResponse({ 'code': 200, 'msg': '未检测到登陆用户'})
+            datas = AddressModel.objects.filter(user=user['id'])
             address = AdderssSeraLizer(datas, many=True)
             return JsonResponse({'code': 200, 'data': address.data})
 
         # 接收userID和address数据创建新的地址
         elif menu == '1':
-            user = request.POST.get('user')
+            user = request.session.get('user')
             address = AddressModel()
             ress = request.POST.get('address')
-            user = UserModel.objects.filter(id=user).first()
             if not user:
+                user = UserModel.objects.filter(id=user).first()
                 return JsonResponse({'code': 400, 'msg':'用户未登陆'})
             if ress:
                 address.address = ress
@@ -197,15 +198,21 @@ class UserOrder(View):
 
     # 接收UserID返回该属于用户所有订单
     def get(self, request):
-        user = request.GET.get('user')
+        user = request.session.get('user')
+        if not user:
+            return JsonResponse({ 'code': '200', 'msg': '未检测到登陆的用户'})
         data = {}
-        if UserModel.objects.filter(id=user):
+        if UserModel.objects.filter(id=user['id']):
+            user = UserModel.objects.filter(id=user['id']).first()
             order = Order_listModel.objects.filter(user=user)
+            if not order:
+                return JsonResponse({ 'code': 200, 'msg': '该用户没有任何订单'})
             for o in order:
                 data[o.id] = Order_listSeraLizer(o).data
                 goods = OrderGoods.objects.filter(order=o)
                 for g in goods:
                     data[o.id][g.id] = GoodsModelSerializers(g.goods).data
+                    data[o.id]['count'] = g.count
             return JsonResponse({ 'code': 200, 'msg': '查询成功', 'data':data})
         else:
             return JsonResponse({ 'code': 400, 'msg': '查找的用户不存在'})
@@ -233,8 +240,10 @@ class UserOrder(View):
 class UserCart(View):
     # 接收UserID返回所有的Cart所有商品信息
     def get(self, request):
-        user = request.GET.get('user')
-        goods = CartModel.objects.filter(user=user)
+        user = request.session.get('user')
+        if not user:
+            return JsonResponse({ 'code': 200, 'msg': '没有检测到登陆的用户'})
+        goods = CartModel.objects.filter(user=user['id'])
         data = {}
         if goods:
             for g in goods:

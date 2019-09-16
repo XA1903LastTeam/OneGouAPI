@@ -75,5 +75,3 @@ class SetCity(View):
         return JsonResponse({'status': 200})
 
 
-def SearchCategory(View):
-    pass
