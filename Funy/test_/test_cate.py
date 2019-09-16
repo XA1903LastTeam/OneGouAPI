@@ -10,7 +10,7 @@ class CategoryTest(TestCase):
 
     def test_01_getcategory(self):
         url = 'http://127.0.0.1:8000/fun/category/'
-        num = random.randrange(1,5)
+        num = random.randrange(1,3)
         cate = requests.get(url).json()
         global cateid
         cateid = cate['data'][num]['id']

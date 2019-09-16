@@ -36,7 +36,6 @@ class YgeatView(View):
     def get(self,request):
         datas = YgeatModel.objects.all()
         ser = YgeatModelSerializers(datas,many=True)
-
         return JsonResponse({
             'data':ser.data,
             'status': 200
@@ -46,10 +45,16 @@ class YgeatView(View):
 class SearchCategory(View):
     def get(self, request):
         name = request.GET.get('info', None)
-        id = CategoryModel.objects.filter(name=name).first()
-        datas = CategoryModel.objects.filter(father_id=id).all()
-        cateinfo = CategoryModelSerializers(datas,many=True)
-        return JsonResponse({
-            'data':cateinfo.data,
-            'status': 200
-        })
+        if name:
+            id = CategoryModel.objects.filter(name=name).first()
+            datas = CategoryModel.objects.filter(father_id=id).all()
+            cateinfo = CategoryModelSerializers(datas,many=True)
+            return JsonResponse({
+                'data':cateinfo.data,
+                'status': 200
+            })
+        else:
+            return JsonResponse({
+                'mesg':'未查询到对应商品',
+                'status': 200
+            })
